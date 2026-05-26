@@ -30,10 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counterAgua = 0;
-  int _counterChocolate = 0;
-  int _counterHelados = 0;
-  int _counterCrema = 0;
   List<Map<String, dynamic>> productos = [];
   List<int> counters = [];
 
@@ -52,54 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
       productos = jsonResponse.cast<Map<String, dynamic>>();
       counters = List.filled(productos.length, 0);
     });
-    
-  }
-  void _incrementCounterAgua() {
-    setState(() {
-      _counterAgua++;
-    });
   }
 
-  void _decrementCounterAgua() {
-    setState(() {
-      _counterAgua--;
-    });
+  void _increment(int index) {
+    setState(() => counters[index]++);
   }
 
-  void _incrementCounterChocolate() {
-    setState(() {
-      _counterChocolate++;
-    });
-  }
-
-  void _decrementCounterChocolate() {
-    setState(() {
-      _counterChocolate--;
-    });
-  }
-
-  void _incrementCounterHelados() {
-    setState(() {
-      _counterHelados++;
-    });
-  }
-
-  void _decrementCounterHelados() {
-    setState(() {
-      _counterHelados--;
-    });
-  }
-
-  void _incrementCounterCrema() {
-    setState(() {
-      _counterCrema++;
-    });
-  }
-
-  void _decrementCounterCrema() {
-    setState(() {
-      _counterCrema--;
-    });
+  void _decrement(int index) {
+    setState(() => counters[index]--);
   }
 
   @override
@@ -107,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
         title: Text(widget.title),
       ),
       body: Center(
@@ -120,125 +75,42 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             SizedBox(height: 50),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Image.asset('assets/agua.png', width: 100, height: 100),
-                        Text('Agregar/Quitar Aguas'),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                _incrementCounterAgua();
-                              },
-                              icon: const Icon(Icons.add),
-                              label: const Text('Agregar 1'),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                _decrementCounterAgua();
-                              },
-                              icon: const Icon(Icons.remove),
-                              label: const Text('Quitar 1'),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'comprar $_counterAgua',
-                          style: TextStyle(color: Colors.brown),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 40),
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/chocolate.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text('Agregar/quitar chocolate'),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _incrementCounterChocolate,
-                              icon: const Icon(Icons.add),
-                              label: const Text('Agregar 1'),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: _decrementCounterChocolate,
-                              label: const Text('Quitar 1'),
-                              icon: const Icon(Icons.remove),
-                            ),
-                          ],
-                        ),
-                        Text('comprar $_counterChocolate'),
-                      ],
-                    ),
-                  ],
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.0,
                 ),
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //! Columna de crema y helados
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/crema.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text('Agregar/Quitar crema'),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _incrementCounterCrema,
-                              label: const Text('Agregar 1'),
-                              icon: const Icon(Icons.add),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: _decrementCounterCrema,
-                              label: const Text('Quitar 1'),
-                              icon: const Icon(Icons.remove),
-                            ),
-                          ],
-                        ),
-                        Text('comprar $_counterCrema'),
-                      ],
-                    ),
-                    SizedBox(width: 30),
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/helados.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _incrementCounterHelados,
-                              label: const Text('Agregar 1'),
-                              icon: const Icon(Icons.add),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: _decrementCounterHelados,
-                              label: const Text('Quitar 1'),
-                              icon: const Icon(Icons.remove),
-                            ),
-                          ],
-                        ),
-                        Text('comprar $_counterHelados'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                itemCount: productos.length,
+                itemBuilder: (context, index) {
+                  final prod = productos[index];
+                  return Column(
+                    children: [
+                      Image.asset('assets/${prod['imagen']}', width: 100, height: 100),
+                      Text(prod['producto'] ?? ''),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () => _increment(index),
+                            icon: const Icon(Icons.add),
+                            label: const Text('Agregar 1'),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () => _decrement(index),
+                            icon: const Icon(Icons.remove),
+                            label: const Text('Quitar 1'),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'comprar ${counters[index]}',
+                        style: TextStyle(color: Colors.brown),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         ),
