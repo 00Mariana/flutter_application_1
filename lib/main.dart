@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +34,26 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counterChocolate = 0;
   int _counterHelados = 0;
   int _counterCrema = 0;
+  List<Map<String, dynamic>> productos = [];
+  List<int> counters = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _loadProductos();
+  }
+
+  Future<void> _loadProductos() async {
+    String jsonString = await rootBundle.loadString('assets/productos.json');
+    Map<String, dynamic> data = jsonDecode(jsonString);
+
+    List<dynamic> jsonResponse = data['productos'];
+    setState(() {
+      productos = jsonResponse.cast<Map<String, dynamic>>();
+      counters = List.filled(productos.length, 0);
+    });
+    
+  }
   void _incrementCounterAgua() {
     setState(() {
       _counterAgua++;

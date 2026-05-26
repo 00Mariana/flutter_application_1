@@ -1,0 +1,24 @@
+{
+  "productos": [
+    {
+      "producto": "Paleta de agua",
+      "imagen": "agua.png",
+      "precio": 15
+    },
+    {
+      "producto": "Paleta de crema",
+      "imagen": "crema.png",
+      "precio": 25
+    },
+    {
+      "producto": "Paleta de chocolate",
+      "imagen": "chocolate.png",
+      "precio": 35
+    },
+    {
+      "producto": "Helado",
+      "imagen": "helado.png",
+      "precio": 30
+    }
+  ]
+}
