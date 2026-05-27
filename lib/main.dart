@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _decrement(int index){
-    setState(() => counters[index]s--);
+    setState(() => counters[index] = counters[index] > 0 ? counters[index] - 1 : 0);
   }
 
   @override
@@ -83,20 +83,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Column(
                       children: [
-                        Image.asset('assets/agua.png', width: 100, height: 100),
-                        Text('Agregar/Quitar Aguas'),
+                        Image.asset('assets/${productos[1]['imagen']}', width: 100, height: 100),
+                        Text('${productos[1]['producto']}'),
+                        Text('${productos[1]['precio']}'),
                         Row(
                           children: [
                             ElevatedButton.icon(
                               onPressed: () {
-                                _incrementCounterAgua();
+                                _increment(1);
                               },
                               icon: const Icon(Icons.add),
                               label: const Text('Agregar 1'),
                             ),
                             ElevatedButton.icon(
                               onPressed: () {
-                                _decrementCounterAgua();
+                                _decrement(1);
                               },
                               icon: const Icon(Icons.remove),
                               label: const Text('Quitar 1'),
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                         Text(
-                          'comprar $_counterAgua',
+                          'comprar ',
                           style: TextStyle(color: Colors.brown),
                         ),
                       ],
@@ -112,27 +113,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(width: 40),
                     Column(
                       children: [
-                        Image.asset(
-                          'assets/chocolate.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text('Agregar/quitar chocolate'),
+                        Image.asset('assets/${productos[2]['imagen']}', width: 100, height: 100),
+                        Text('${productos[2]['producto']}'),
+                        Text('${productos[2]['precio']}'),
+        
                         Row(
                           children: [
                             ElevatedButton.icon(
-                              onPressed: _incrementCounterChocolate,
+                              onPressed: () => _increment(1),
                               icon: const Icon(Icons.add),
                               label: const Text('Agregar 1'),
                             ),
                             ElevatedButton.icon(
-                              onPressed: _decrementCounterChocolate,
+                              onPressed: () => _decrement(1),
                               label: const Text('Quitar 1'),
                               icon: const Icon(Icons.remove),
                             ),
                           ],
                         ),
-                        Text('comprar $_counterChocolate'),
+                        Text('comprar '),
                       ],
                     ),
                   ],
@@ -144,52 +143,47 @@ class _MyHomePageState extends State<MyHomePage> {
                     //! Columna de crema y helados
                     Column(
                       children: [
-                        Image.asset(
-                          'assets/crema.png',
-                          width: 100,
-                          height: 100,
-                        ),
-                        Text('Agregar/Quitar crema'),
+                        Image.asset('assets/${productos[0]['imagen']}', width: 100, height: 100),
+                        Text('${productos[0]['producto']}'),
+                        Text('${productos[0]['precio']}'),
                         Row(
                           children: [
                             ElevatedButton.icon(
-                              onPressed: _incrementCounterCrema,
+                              onPressed: () => _increment(0),
                               label: const Text('Agregar 1'),
                               icon: const Icon(Icons.add),
                             ),
                             ElevatedButton.icon(
-                              onPressed: _decrementCounterCrema,
+                              onPressed: () => _decrement(0),
                               label: const Text('Quitar 1'),
                               icon: const Icon(Icons.remove),
                             ),
                           ],
                         ),
-                        Text('comprar $_counterCrema'),
+                        Text('comprar '),
                       ],
                     ),
                     SizedBox(width: 30),
                     Column(
                       children: [
-                        Image.asset(
-                          'assets/helados.png',
-                          width: 100,
-                          height: 100,
-                        ),
+                        Image.asset('assets/${productos[3]['imagen']}', width: 100, height: 100),
+                        Text('${productos[3]['producto']}'),
+                        Text('${productos[3]['precio']}'),
                         Row(
                           children: [
                             ElevatedButton.icon(
-                              onPressed: _incrementCounterHelados,
+                              onPressed: () => _increment(1),
                               label: const Text('Agregar 1'),
                               icon: const Icon(Icons.add),
                             ),
                             ElevatedButton.icon(
-                              onPressed: _decrementCounterHelados,
+                              onPressed: () => _decrement(1),
                               label: const Text('Quitar 1'),
                               icon: const Icon(Icons.remove),
                             ),
                           ],
                         ),
-                        Text('comprar $_counterHelados'),
+                        Text('comprar '),
                       ],
                     ),
                   ],
